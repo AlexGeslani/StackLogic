@@ -4,7 +4,9 @@
 
 **Version:** v0.3.0-beta.1
 
-StackLogic is an experimental browser-based falling-block arcade puzzler with solo play, real-time two-player matches, live opponent state, responsive keyboard and touch controls, persistent local scores, and four visual themes.
+StackLogic is a browser-based falling-block puzzle game featuring solo play, real-time two-player matches, deterministic gameplay, responsive keyboard and touch controls, local high scores, and four visual themes.
+
+The project was developed with AI coding assistance from Qwen 3.5 and Qwen 3.6 models running entirely on local hardware—without hosted model APIs.
 
 **[Play StackLogic](https://alexgeslani.github.io/StackLogic/)** · **[Latest release](https://github.com/AlexGeslani/StackLogic/releases/tag/v0.3.0-beta.1)** · **[Changelog](CHANGELOG.md)** · **[Backlog](BACKLOG.md)**
 
