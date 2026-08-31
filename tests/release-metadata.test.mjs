@@ -3,7 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { describe, it } from 'node:test';
 
 const RELEASE = '0.3.0-beta.1';
-const [indexHtml, gameJs, bootstrapJs, adapterJs, readme, changelog, packageJson, packageLock] = await Promise.all([
+const GAMEPLAY_HERO_PATH = 'docs/screenshots/stacklogic-solo-gameplay.gif';
+const [indexHtml, gameJs, bootstrapJs, adapterJs, readme, changelog, packageJson, packageLock, gameplayHero] = await Promise.all([
   readFile(new URL('../public/index.html', import.meta.url), 'utf8'),
   readFile(new URL('../public/game.js', import.meta.url), 'utf8'),
   readFile(new URL('../public/theme-rain-bootstrap.js', import.meta.url), 'utf8'),
@@ -12,6 +13,7 @@ const [indexHtml, gameJs, bootstrapJs, adapterJs, readme, changelog, packageJson
   readFile(new URL('../CHANGELOG.md', import.meta.url), 'utf8'),
   readFile(new URL('../package.json', import.meta.url), 'utf8').then(JSON.parse),
   readFile(new URL('../package-lock.json', import.meta.url), 'utf8').then(JSON.parse),
+  readFile(new URL(`../${GAMEPLAY_HERO_PATH}`, import.meta.url)),
 ]);
 
 describe('release metadata', () => {
@@ -20,6 +22,20 @@ describe('release metadata', () => {
     assert.equal(packageLock.version, RELEASE);
     assert.equal(packageLock.packages[''].version, RELEASE);
     assert.match(readme, /\*\*Version:\*\* v0\.3\.0-beta\.1/);
+  });
+
+  it('publishes a tested single-player gameplay GIF as the first README image', () => {
+    const heroIndex = readme.indexOf(GAMEPLAY_HERO_PATH);
+    const screenshotsIndex = readme.indexOf('## Screenshots');
+    assert.ok(heroIndex >= 0, 'README must reference the gameplay hero');
+    assert.ok(heroIndex < screenshotsIndex, 'gameplay hero must precede the screenshot gallery');
+    assert.equal(gameplayHero.subarray(0, 6).toString('ascii'), 'GIF89a');
+    assert.deepEqual(
+      { width: gameplayHero.readUInt16LE(6), height: gameplayHero.readUInt16LE(8) },
+      { width: 800, height: 680 },
+    );
+    assert.ok(gameplayHero.byteLength > 500_000, 'gameplay hero must contain real animation frames');
+    assert.ok(gameplayHero.byteLength < 3 * 1024 * 1024, 'gameplay hero must remain publication-sized');
   });
 
   it('publishes a machine-readable release marker', () => {
