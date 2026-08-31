@@ -10,6 +10,14 @@ The project was developed with AI coding assistance from Qwen 3.5 and Qwen 3.6 m
 
 **[Play StackLogic](https://alexgeslani.github.io/StackLogic/)** · **[Latest release](https://github.com/AlexGeslani/StackLogic/releases/tag/v0.3.0-beta.1)** · **[Changelog](CHANGELOG.md)** · **[Backlog](BACKLOG.md)**
 
+<p align="center">
+  <img src="docs/screenshots/stacklogic-solo-gameplay.gif" width="800" alt="StackLogic single-player game in the Matrix theme with falling pieces, a populated board, score, level, and next-piece display">
+</p>
+
+<p align="center">
+  <sub>Actual single-player gameplay captured from the public browser build.</sub>
+</p>
+
 ## Screenshots
 
 ### Create or join a multiplayer room
